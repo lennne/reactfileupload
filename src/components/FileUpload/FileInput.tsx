@@ -3,7 +3,7 @@ import { FileInputProps } from "./types";
 import { Plus } from "lucide-react";
 
 export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(({ disabled, onFileSelect}: FileInputProps, ref) => {
-    return <>
+    return (<>
     <input 
     type="file"
     ref={ref}
@@ -15,11 +15,11 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(({ disable
     />
     <label
     htmlFor="file-upload"
-    className="flex cursor-printer bg-gray-500 items-center gap-2 px-2 py-1 rounded-md hover:opacity"
+    className="flex cursor-printer bg-grayscsale-500 items-center gap-2 px-2 py-1 rounded-md hover:opacity"
     >
         <Plus size={18} />
         Select Files
     </label>
 
-    </>
+    </>)
 });

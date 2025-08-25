@@ -1,16 +1,14 @@
-import { ChangeEvent, forwardRef, useRef, useState } from "react";
-import { ActionButtonsProps, FileInputProps, FileItemProps, FileListProps, FileWithProgress, ProgressBarProps } from "./types";
-import { FileAudio, FileIcon, FileImage, FileText, FileVideo, Plus, Upload, X } from "lucide-react";
+import { ChangeEvent, useRef, useState } from "react";
+import { FileWithProgress } from "./types";
 import axios from "axios";
-import { ProgressBar } from "./ProgressBar";
 import { FileList } from "./FileList";
 import { ActionsButtons } from "./ActionsButtons";
 import { FileInput } from "./FileInput";
 
-const FileUpload = () => {
 
+const FileUpload = () => {
+    const UPLOAD_URL = import.meta.env.VITE_UPLOAD_URL;
     const [files, SetFiles] = useState<FileWithProgress[]>([])
-    const [disabled, SetDisabled] = useState(false);
     //input ref for the normal HTML element
     const inputRef = useRef<HTMLInputElement>(null);
     const [uploading, SetUploading] = useState(false);
@@ -30,7 +28,7 @@ const FileUpload = () => {
             formData.append('file', fileWithProgress.file);
 
             try{
-                await axios.post('https://kobiansah-3000.theianext-0-labs-prod-misc-tools-us-east-0.proxy.cognitiveclass.ai/upload', formData, {
+                await axios.post(UPLOAD_URL, formData, {
                     onUploadProgress: (progressEvent) => {
                         const total = progressEvent.total ?? 1
                         const progress = Math.round(
@@ -84,12 +82,13 @@ const FileUpload = () => {
         ref={inputRef}
         disabled={uploading}
         onFileSelect={handleFileSelect}/>
-        </div>
+        
         <ActionsButtons
         onUpload={handleUpload}
         onClear={handleClear}
         disabled={files.length === 0 ||  uploading}
         />
+        </div>
         <FileList files={files} onRemove={removeFile} uploading={uploading}/>
     </div>
     
